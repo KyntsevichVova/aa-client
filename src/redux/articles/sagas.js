@@ -37,7 +37,7 @@ function* fetchOneArticleSaga(action) {
         url: `/api/v1/articles/${action.payload.id}`,
         params: {},
     }));
-    let data = yield select(selectors.articles.selectOne);
+    let data = {};
     if (response.ok) {
         data = yield response.json();
         yield put(setOne({

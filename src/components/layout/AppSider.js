@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const { Sider } = Layout;
 
 function AppSider() {
-    const menu = useSelector(selectors.menu.selectMenu);
+    const selected = useSelector(selectors.menu.selectSelected);
     const authorized = useSelector(selectors.status.selectAuthorized);
     const dispatch = useDispatch();
 
@@ -21,7 +21,7 @@ function AppSider() {
     }, [dispatch]);
     
     const location = useLocation();
-    if (menu.selected !== location.pathname) {
+    if (selected !== location.pathname) {
         dispatchSelected(location.pathname);
     }
     
@@ -37,26 +37,32 @@ function AppSider() {
                   background: "rgba(255, 255, 255, 0.2)",
                   margin: "16px",
             }} />
-            <Menu theme="dark" mode="inline" selectedKeys={[menu.selected]}>
+            <Menu 
+                theme="dark" 
+                mode="inline" 
+                selectedKeys={[selected]}
+            >
                 <Menu.Item key="/">
-                    <Link to="/" onClick={() => dispatchSelected('/')}>
+                    <Link 
+                        to="/" 
+                        onClick={() => dispatchSelected('/')}
+                    >
                         Articles
                     </Link>
                 </Menu.Item>
-                {
-                /*<Menu.Item key="/authors">
-                    <Link to="/authors" onClick={() => dispatchSelected('/authors')}>
-                        Authors
-                    </Link>
-                </Menu.Item>*/
-                }
                 <Menu.Item key="/notifications">
-                    <Link to="/notifications" onClick={() => dispatchSelected('/notifications')}>
+                    <Link 
+                        to="/notifications" 
+                        onClick={() => dispatchSelected('/notifications')}
+                    >
                         Notifications
                     </Link>
                 </Menu.Item>
                 <Menu.Item key="/subscriptions">
-                    <Link to="/subscriptions" onClick={() => dispatchSelected('/subscriptions')}>
+                    <Link 
+                        to="/subscriptions" 
+                        onClick={() => dispatchSelected('/subscriptions')}
+                    >
                         Subscriptions
                     </Link>
                 </Menu.Item>

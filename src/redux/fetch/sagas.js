@@ -1,16 +1,16 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { status } from '../actions';
+import { actions } from '../../redux';
 import { REQUEST } from "./actions";
 
 export function* fetchRequestSaga(action) {
     const { method, url, params } = action.payload;
-    yield put(status.setLoading({ loading: true }));
+    yield put(actions.status.setLoading({ loading: true }));
     const response = yield call(method, url, params);
     if (response.status === 401) {
-        yield put(status.setAuthorized({ authorized: false }));
-        yield put(status.setLoading({ loading: false }));
+        yield put(actions.status.setAuthorized({ authorized: false }));
+        yield put(actions.status.setLoading({ loading: false }));
     }
-    yield put(status.setLoading({ loading: false }));
+    yield put(actions.status.setLoading({ loading: false }));
     return response;
 }
 

@@ -8,12 +8,12 @@ import { sagas as notifications } from './notifications';
 import { sagas as subscriptions } from './subscriptions';
 
 export const registerSagas = (sagaMiddleware) => {
-    sagaMiddleware.run(menu.menuRootWatcher);
-    sagaMiddleware.run(location.locationRootWatcher);
-    sagaMiddleware.run(fetch.fetchRootWatcher);
     sagaMiddleware.run(articles.articlesRootWatcher);
     sagaMiddleware.run(auth.authRootWatcher);
     sagaMiddleware.run(authors.authorsRootWatcher);
+    sagaMiddleware.run(fetch.fetchRootWatcher);
+    sagaMiddleware.run(location.locationRootWatcher);
+    sagaMiddleware.run(menu.menuRootWatcher);
     sagaMiddleware.run(notifications.notificationsRootWatcher);
     sagaMiddleware.run(subscriptions.subscriptionsRootWatcher);
 }

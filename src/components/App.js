@@ -1,13 +1,13 @@
 import React from 'react';
 import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
 import AppLayout from './layout/AppLayout';
+import ArticlePage from './pages/article/ArticlePage';
 import ArticlesPage from './pages/article/ArticlesPage';
+import AuthorPage from './pages/author/AuthorPage';
+import NotificationsPage from './pages/notification/NotificationsPage';
 import SignInPage from './pages/signin/SignInPage';
 import SignUpPage from './pages/signup/SignUpPage';
-import NotificationsPage from './pages/notification/NotificationsPage';
 import SubscriptionsPage from './pages/subscriptions/SubscriptionsPage';
-import ArticlePage from './pages/article/ArticlePage';
-import AuthorPage from './pages/author/AuthorPage';
 
 function App() {
     return (
@@ -35,11 +35,6 @@ function App() {
                     <Route exact path="/authors/:authorId">
                         <AuthorPage />
                     </Route>
-                    {/*
-                    {/*<Route exact path="/authors">
-                        <AuthorsPage />
-                    </Route>
-                    */}
                     <Route>
                         <Redirect to="/" />
                     </Route>

@@ -8,4 +8,4 @@ import { actions as notifications } from './notifications';
 import { actions as status } from './status';
 import { actions as subscriptions } from './subscriptions';
 
-export { menu, location, articles, fetch, status, auth, notifications, subscriptions, authors };
+export { articles, auth, authors, fetch, location, menu, notifications, status, subscriptions, };

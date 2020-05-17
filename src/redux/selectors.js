@@ -7,4 +7,4 @@ import { selectors as notifications } from './notifications';
 import { selectors as status } from './status';
 import { selectors as subscriptions } from './subscriptions';
 
-export { menu, location, articles, status, auth, notifications, subscriptions, authors };
+export { articles, auth, authors, location, menu, notifications, status, subscriptions, };
