@@ -34,12 +34,15 @@ function* fetchAllNotificationsSaga(action) {
 function* setViewedSaga(action) {
     const notifications = yield select(selectNotifications);
     const ids = notifications.items.filter((n) => !n.viewed).map((n) => n.id);
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
     yield call(fetchRequestSaga, request({
         method: API.post,
         url: '/api/v1/notifications/view',
         params: {
             body: JSON.stringify(ids),
             credentials: 'include',
+            headers,
         },
     }));
 }

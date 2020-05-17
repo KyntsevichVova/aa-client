@@ -1,6 +1,6 @@
 import { actionName, createAction } from '../createAction';
 
-const an = actionName('articles');
+const an = actionName('authors');
 
 export const SET_PAGE = an('SET_PAGE');
 export const setPage = createAction(SET_PAGE);

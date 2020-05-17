@@ -4,10 +4,10 @@ import { API } from '../../lib/api';
 import { request } from '../fetch/actions';
 import { fetchRequestSaga } from '../fetch/sagas';
 import { FETCH_ALL, FETCH_ONE, setItems, setOne, setTotal } from './actions';
-import { selectArticles } from './selectors';
+import { selectors } from '../../redux';
 
 function* fetchAllArticlesSaga(action) {
-    const articles = yield select(selectArticles);
+    const articles = yield select(selectors.articles.selectArticles);
     const searchParams = new URLSearchParams();
     searchParams.append('query', articles.search);
     searchParams.append('offset', articles.page * articles.pageSize);
@@ -37,7 +37,7 @@ function* fetchOneArticleSaga(action) {
         url: `/api/v1/articles/${action.payload.id}`,
         params: {},
     }));
-    let data = {};
+    let data = yield select(selectors.articles.selectOne);
     if (response.ok) {
         data = yield response.json();
         yield put(setOne({

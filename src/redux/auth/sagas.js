@@ -1,13 +1,28 @@
 import { call, put, select, takeEvery } from 'redux-saga/effects';
 import { API } from '../../lib/api';
+import { actions, selectors } from '../../redux';
 import { request } from '../fetch/actions';
 import { fetchRequestSaga } from '../fetch/sagas';
-import { SIGN_IN, SIGN_UP, SIGN_OUT, CHECK_AUTH } from './actions';
-import { location, status } from '../actions';
-import { selectors } from '.';
+import { CHECK_AUTH, SIGN_IN, SIGN_OUT, SIGN_UP } from './actions';
+
+const locationRegs = [
+    /^#\/$/,
+    /^#\/articles\/\d+$/,
+    /^#\/authors$/,
+    /^#\/authors\/\d+$/,
+    /^#\/signin$/,
+    /^#\/signup$/,
+];
+
+function* checkLocationAuthorizedSaga() {
+    const location = window.location.hash;
+    const correct = locationRegs.some((rx) => rx.test(location));
+    if (!correct)
+        yield put(actions.location.pushLocation({ location: '/' }));
+}
 
 function* signInSaga(action) {
-    const auth = yield select(selectors.selectAuth);
+    const auth = yield select(selectors.auth.selectAuth);
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     const response = yield call(fetchRequestSaga, request({
@@ -20,14 +35,14 @@ function* signInSaga(action) {
         },
     }));
     if (response.ok) {
-        yield put(status.setAuthorized({ authorized: true }));
+        yield put(actions.status.setAuthorized({ authorized: true }));
     } else {
-        yield put(status.setAuthorized({ authorized: false })); 
+        yield put(actions.status.setAuthorized({ authorized: false })); 
     }
 }
 
 function* signUpSaga(action) {
-    const auth = yield select(selectors.selectAuth);
+    const auth = yield select(selectors.auth.selectAuth);
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     const response = yield call(fetchRequestSaga, request({
@@ -40,9 +55,9 @@ function* signUpSaga(action) {
         },
     }));
     if (response.ok) {
-        yield put(status.setAuthorized({ authorized: true }));
+        yield put(actions.status.setAuthorized({ authorized: true }));
     } else {
-        yield put(status.setAuthorized({ authorized: false })); 
+        yield put(actions.status.setAuthorized({ authorized: false })); 
     }
 }
 
@@ -54,22 +69,23 @@ function* signOutSaga(action) {
             credentials: 'include',
         },
     }));
-    yield put(status.setAuthorized({ authorized: false }));
-    yield put(location.pushLocation({ location: '/' }));
+    yield put(actions.status.setAuthorized({ authorized: false }));
+    yield call(checkLocationAuthorizedSaga);
 }
 
 function* checkAuthSaga() {
     const response = yield call(fetchRequestSaga, request({
-        method: API.post,
+        method: API.get,
         url: '/api/v1/self',
         params: {
             credentials: 'include',
         },
     }));
     if (response.status === 401 || !response.ok) {
-        yield put(status.setAuthorized({ authorized: false }));
+        yield put(actions.status.setAuthorized({ authorized: false }));
+        yield call(checkLocationAuthorizedSaga);
     } else {
-        yield put(status.setAuthorized({ authorized: true }));
+        yield put(actions.status.setAuthorized({ authorized: true }));
     }
 }
 

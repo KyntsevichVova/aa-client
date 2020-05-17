@@ -6,6 +6,8 @@ import SignInPage from './pages/signin/SignInPage';
 import SignUpPage from './pages/signup/SignUpPage';
 import NotificationsPage from './pages/notification/NotificationsPage';
 import SubscriptionsPage from './pages/subscriptions/SubscriptionsPage';
+import ArticlePage from './pages/article/ArticlePage';
+import AuthorPage from './pages/author/AuthorPage';
 
 function App() {
     return (
@@ -27,13 +29,13 @@ function App() {
                     <Route exact path="/subscriptions">
                         <SubscriptionsPage />
                     </Route>
-                    {/*
                     <Route exact path="/articles/:articleId">
                         <ArticlePage />
                     </Route>
                     <Route exact path="/authors/:authorId">
                         <AuthorPage />
                     </Route>
+                    {/*
                     {/*<Route exact path="/authors">
                         <AuthorsPage />
                     </Route>

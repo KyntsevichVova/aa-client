@@ -25,14 +25,18 @@ function SignUpPage() {
 
     const onSignUp = React.useCallback(({ values }) => {
         const { email, password } = values;
-        dispatch(actions.auth.setEmail({ email }));
-        dispatch(actions.auth.setPassword({ password }));
+        dispatch(actions.auth.setAuth({
+            auth: {
+                email,
+                password,
+            },
+        }));
         dispatch(actions.auth.signUp());
     }, [dispatch]);
 
     return (
         <>
-            {authorized && (<Redirect to="/"/>)}
+            {!authorized && (<Redirect to="/"/>)}
             <Form
                 {...layout}
                 name="basic"

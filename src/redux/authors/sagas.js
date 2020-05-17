@@ -34,7 +34,7 @@ function* fetchAllAuthorsSaga(action) {
 function* fetchOneAuthorSaga(action) {
     const response = yield call(fetchRequestSaga, request({
         method: API.get,
-        url: `/api/v1/articles/${action.payload.id}`,
+        url: `/api/v1/authors/${action.payload.id}`,
         params: {},
     }));
     let data = {};

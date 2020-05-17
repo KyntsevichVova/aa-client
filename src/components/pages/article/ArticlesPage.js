@@ -10,7 +10,7 @@ const columns = [
         dataIndex: 'title',
         sortOrder: false,
         fixed: true,
-        width: '50%',
+        width: '60%',
         render: (_, record) => {
             return (
                 <span>
@@ -24,17 +24,15 @@ const columns = [
         dataIndex: 'articleAuthors',
         sortOrder: false,
         fixed: true,
-        width: '50%',
+        width: '40%',
         render: (_, record) => {
             return record.articleAuthors.map((author) => (
-                <>
-                    <span style={{
-                        paddingRight: '5px',
-                    }}>
-                        <Link to={`/authors/${author.id}`}>{author.name}</Link>
-                        ;
-                    </span>
-                </>
+                <span style={{
+                    paddingRight: '5px',
+                }}>
+                    <Link to={`/authors/${author.id}`}>{author.name}</Link>
+                    ;
+                </span>
             ));
         },
     },
@@ -80,7 +78,7 @@ function ArticlesPage() {
             <Row>
                 <Col span={24}>
                     <Table
-                        dataSource={articles.items.map((item) => ({ ...item, key: item.id }))}
+                        dataSource={articles?.items?.map((item) => ({ ...item, key: item.id }))}
                         columns={columns}
                         pagination={false}
                     />

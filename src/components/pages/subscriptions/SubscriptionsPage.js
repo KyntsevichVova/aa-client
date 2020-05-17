@@ -1,12 +1,15 @@
 import React from 'react';
 import { Button, Col, Pagination, Row, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { actions, selectors } from '../../../redux';
 
 function SubscriptionsPage() {
-    const dispatch = useDispatch();
+    const authorized = useSelector(selectors.status.selectAuthorized);
     const subscriptions = useSelector(selectors.subscriptions.selectSubscriptions);
+
+    const dispatch = useDispatch();
+
     const onSetPage = React.useCallback((page) => {
         dispatch(actions.subscriptions.setPage({
             page: page - 1,
@@ -51,7 +54,10 @@ function SubscriptionsPage() {
             width: '30%',
             render: (_, record) => {
                 return (
-                    <Button danger onClick={() => onUnsubscribe(record.id)}>
+                    <Button 
+                        danger 
+                        onClick={() => onUnsubscribe(record.id)}
+                    >
                         Unsubscribe
                     </Button>
                 );
@@ -61,10 +67,11 @@ function SubscriptionsPage() {
     
     return (
         <>
+            {!authorized && (<Redirect to="/" />)}
             <Row>
                 <Col span={24}>
                     <Table
-                        dataSource={subscriptions.items.map((item) => ({ ...item, key: item.id }))}
+                        dataSource={subscriptions?.items?.map((item) => ({ ...item, key: item.id }))}
                         columns={columns}
                         pagination={false}
                     />

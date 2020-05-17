@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Pagination, Row, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { actions, selectors } from '../../../redux';
 
 const columns = [
@@ -10,11 +10,11 @@ const columns = [
         dataIndex: 'article',
         sortOrder: false,
         fixed: true,
-        width: '80%',
+        width: '85%',
         render: (_, record) => {
             return (
                 <span>
-                    <Link to={`/articles/${record.article.id}`}>{record.aricle.title}</Link>                   
+                    <Link to={`/articles/${record?.article?.id}`}>{record?.article?.title}</Link>                   
                 </span>
             );
         },
@@ -24,13 +24,11 @@ const columns = [
         dataIndex: 'viewed',
         sortOrder: false,
         fixed: true,
-        width: '20%',
+        width: '15%',
         render: (_, record) => {
             const viewed = record.viewed;
             if (viewed) {
-                return (
-                    <></>
-                );
+                return null;
             } else {
                 return (
                     <span style={{
@@ -45,6 +43,8 @@ const columns = [
 ];
 
 function NotificationsPage() {
+    const authorized = useSelector(selectors.status.selectAuthorized);
+
     const dispatch = useDispatch();
     const notifications = useSelector(selectors.notifications.selectNotifications);
     const onSetPage = React.useCallback((page) => {
@@ -64,10 +64,11 @@ function NotificationsPage() {
     
     return (
         <>
+            {!authorized && (<Redirect to="/"/>)}
             <Row>
                 <Col span={24}>
                     <Table
-                        dataSource={notifications.items.map((item) => ({ ...item, key: item.id }))}
+                        dataSource={notifications?.items?.map((item) => ({ ...item, key: item.id }))}
                         columns={columns}
                         pagination={false}
                     />
