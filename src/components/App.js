@@ -1,37 +1,43 @@
 import React from 'react';
-import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
-import AuthorizedRoute from './AuthorizedRoute';
-import HomePage from './pages/home/HomePage';
+import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
 import AppLayout from './layout/AppLayout';
-import { useDispatch } from 'react-redux';
-import {actions} from '../redux';
+import ArticlesPage from './pages/article/ArticlesPage';
+import SignInPage from './pages/signin/SignInPage';
+import SignUpPage from './pages/signup/SignUpPage';
+import NotificationsPage from './pages/notification/NotificationsPage';
+import SubscriptionsPage from './pages/subscriptions/SubscriptionsPage';
 
 function App() {
-    const dispatch = useDispatch();
-    dispatch(actions.location.checkLocation({}));
-
     return (
         <HashRouter>
             <AppLayout>
                 <Switch>
-                    <AuthorizedRoute exact path="/">
-                        <HomePage />
-                    </AuthorizedRoute>
-                    <AuthorizedRoute exact path="/kek">
-                        Kek
-                    </AuthorizedRoute>
-                    {/*<AuthorizedRoute exact path="/article/:articleId">
-                        <ArticlePage />
-                    </AuthorizedRoute>
-                    <AuthorizedRoute exact path="/author/:authorId">
-                        <AuthorPage />
-                    </AuthorizedRoute>
+                    <Route exact path="/">
+                        <ArticlesPage />
+                    </Route>
                     <Route exact path="/signin">
                         <SignInPage />
                     </Route>
                     <Route exact path="/signup">
                         <SignUpPage />
-                    </Route>*/}
+                    </Route>
+                    <Route exact path="/notifications">
+                        <NotificationsPage />
+                    </Route>
+                    <Route exact path="/subscriptions">
+                        <SubscriptionsPage />
+                    </Route>
+                    {/*
+                    <Route exact path="/articles/:articleId">
+                        <ArticlePage />
+                    </Route>
+                    <Route exact path="/authors/:authorId">
+                        <AuthorPage />
+                    </Route>
+                    {/*<Route exact path="/authors">
+                        <AuthorsPage />
+                    </Route>
+                    */}
                     <Route>
                         <Redirect to="/" />
                     </Route>

@@ -25,6 +25,6 @@ const store = createStore(
 
 registerSagas(sagaMiddleware);
 
-store.dispatch(actions.location.checkLocation({}));
+store.dispatch(actions.auth.checkAuth());
 
 export { actions, selectors, store, };
