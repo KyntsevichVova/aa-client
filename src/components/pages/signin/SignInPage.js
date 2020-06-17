@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, message } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { actions, selectors } from '../../../redux';
@@ -34,9 +34,15 @@ function SignInPage() {
         dispatch(actions.auth.signIn());
     }, [dispatch]);
 
+    const error = useSelector(selectors.auth.selectError);
+    if (error) {
+        message.error(error);
+        dispatch(actions.auth.setError({ error: '' }));
+    }
+
     return (
         <>
-            {!authorized && (<Redirect to="/"/>)}
+            {authorized && (<Redirect to="/"/>)}
             <Form
                 {...layout}
                 name="basic"

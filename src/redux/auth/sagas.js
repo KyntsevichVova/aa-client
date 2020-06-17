@@ -37,7 +37,9 @@ function* signInSaga(action) {
     if (response.ok) {
         yield put(actions.status.setAuthorized({ authorized: true }));
     } else {
-        yield put(actions.status.setAuthorized({ authorized: false })); 
+        yield put(actions.status.setAuthorized({ authorized: false }));
+        const error = "User with such email/password not found";
+        yield put(actions.auth.setError({ error }));
     }
 }
 
@@ -58,6 +60,8 @@ function* signUpSaga(action) {
         yield put(actions.status.setAuthorized({ authorized: true }));
     } else {
         yield put(actions.status.setAuthorized({ authorized: false })); 
+        const error = yield response.text();
+        yield put(actions.auth.setError({ error }));
     }
 }
 

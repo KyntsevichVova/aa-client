@@ -22,3 +22,6 @@ export const setAuth = createAction(SET_AUTH);
 
 export const CHECK_AUTH = an('CHECK_AUTH');
 export const checkAuth = createAction(CHECK_AUTH);
+
+export const SET_ERROR = an('SET_ERROR');
+export const setError = createAction(SET_ERROR);

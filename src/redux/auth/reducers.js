@@ -1,8 +1,9 @@
-import { SET_AUTH, SET_EMAIL, SET_PASSWORD } from "./actions";
+import { SET_AUTH, SET_EMAIL, SET_PASSWORD, SET_ERROR } from "./actions";
 
 export const initState = {
     email: "",
     password: "",
+    error: "",
 };
 
 export function reducer(state = initState, action) {
@@ -21,6 +22,11 @@ export function reducer(state = initState, action) {
             return {
                 ...state,
                 ...action.payload.auth,
+            }
+        case SET_ERROR:
+            return {
+                ...state,
+                error: action.payload.error,
             }
         default:
             return state;

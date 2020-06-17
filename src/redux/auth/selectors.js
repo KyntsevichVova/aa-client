@@ -9,3 +9,7 @@ export function selectEmail(root) {
 export function selectPassword(root) {
     return root.auth.password;
 }
+
+export function selectError(root) {
+    return root.auth.error;
+}
